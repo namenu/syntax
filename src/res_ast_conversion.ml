@@ -413,6 +413,8 @@ let normalize =
           ]
         ) when hasUncurriedAttribute expr.pexp_attributes
         ->
+        (* In Reason both f(.) and f(. ()) express arity0. In ReScript only f(.)
+         * expresses arity0. We tweak the Reason version to always match the f(.) on the ReScript side. *)
         {expr with
           pexp_attributes = mapper.attributes mapper expr.pexp_attributes;
           pexp_desc = Pexp_apply (

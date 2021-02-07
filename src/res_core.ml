@@ -3423,12 +3423,12 @@ and parseCallExpr p funExpr =
         pexp_desc = Pexp_construct ({txt = Longident.Lident "()"}, None);
         pexp_loc = loc;
         pexp_attributes = []
-      } as expr)
+      } as unitExpr)
     ] when (not loc.loc_ghost) && p.mode = ParseForTypeChecker ->
       (*  Since there is no syntax space for arity zero vs arity one,
        *  we expand
        *    `fn(. ())` into
-       *    `fn(. {let __res_unit = (); __res_unit})`
+       *    `fn(. ignore())`
        *  when the parsetree is intended for type checking
        *
        *  Note:
@@ -3440,12 +3440,12 @@ and parseCallExpr p funExpr =
    [
      true,
      Asttypes.Nolabel,
-     Ast_helper.Exp.let_
-      Asttypes.Nonrecursive
-      [Ast_helper.Vb.mk
-        (Ast_helper.Pat.var (Location.mknoloc "__res_unit"))
-        expr]
-      (Ast_helper.Exp.ident (Location.mknoloc (Longident.Lident "__res_unit")))
+     Ast_helper.Exp.apply
+       (Ast_helper.Exp.ident (Location.mknoloc (Longident.Lident "ignore")))
+       [
+         Asttypes.Nolabel,
+         unitExpr
+       ]
    ]
   | args -> args
   in

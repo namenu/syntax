@@ -75,3 +75,9 @@ let _ =
         ),
       )
     });
+
+let () = {
+  resolve(.)
+  resolve(. ())
+  resolve(. ignore())
+}

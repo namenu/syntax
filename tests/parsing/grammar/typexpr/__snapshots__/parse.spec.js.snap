@@ -119,6 +119,13 @@ type nonrec t = (module Console) ref
 let (devices : (string, (module DEVICE)) Hastbl.t) = Hashtbl.creat 17"
 `;
 
+exports[`objectTypeSpreading.res 1`] = `
+"type nonrec a = < x: int   >  Js.t
+type nonrec u = < a ;u: int   > 
+type nonrec v = < v: int  ;a  >  Js.t
+type nonrec w = < j: int  ;a ;k: int  ;v  >  Js.t"
+`;
+
 exports[`parenthesized.js 1`] = `"type nonrec t = ((a:((int)[@ns.namedArgLoc ]) -> unit)[@attr ])"`;
 
 exports[`poly.js 1`] = `
